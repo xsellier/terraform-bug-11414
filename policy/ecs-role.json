@@ -1,0 +1,16 @@
+{
+  "Version": "2008-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": [
+          "application-autoscaling.amazonaws.com",
+          "ecs.amazonaws.com",
+          "ecs-tasks.amazonaws.com"
+        ]
+      },
+      "Effect": "Allow"
+    }
+  ]
+}

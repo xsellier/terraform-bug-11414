@@ -1,0 +1,34 @@
+aws_ecs_task_definition.task: Refreshing state... (ID: service)
+aws_iam_role.service: Refreshing state... (ID: test-role)
+aws_ecs_cluster.cluster: Refreshing state... (ID: arn:aws:ecs:us-east-1:536007072899:cluster/test-cluster)
+aws_iam_instance_profile.service: Refreshing state... (ID: test-instance-profile)
+aws_iam_role_policy.service: Refreshing state... (ID: test-role:test-role-policy)
+aws_ecs_service.service: Refreshing state... (ID: arn:aws:ecs:us-east-1:536007072899:service/test)
+aws_appautoscaling_target.service_asg: Refreshing state... (ID: service/test-cluster/test)
+aws_cloudwatch_metric_alarm.cpu_service_down: Refreshing state... (ID: test-cpu-alarm-down)
+aws_cloudwatch_metric_alarm.mem_service_down: Refreshing state... (ID: test-mem-alarm-down)
+aws_appautoscaling_policy.service_down: Refreshing state... (ID: test-asp-down)
+aws_appautoscaling_policy.service_up: Refreshing state... (ID: test-asp-up)
+aws_cloudwatch_metric_alarm.mem_service_up: Refreshing state... (ID: test-mem-alarm-up)
+aws_cloudwatch_metric_alarm.cpu_service_up: Refreshing state... (ID: test-cpu-alarm-up)
+aws_appautoscaling_target.service_asg: Destroying...
+aws_appautoscaling_target.service_asg: Destruction complete
+aws_appautoscaling_target.service_asg: Creating...
+  arn:                "" => "<computed>"
+  max_capacity:       "" => "4"
+  min_capacity:       "" => "2"
+  name:               "" => "<computed>"
+  resource_id:        "" => "service/test-cluster/test"
+  role_arn:           "" => "arn:aws:iam::536007072899:role/test-role"
+  scalable_dimension: "" => "ecs:service:DesiredCount"
+  service_namespace:  "" => "ecs"
+aws_appautoscaling_target.service_asg: Creation complete
+
+Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
+
+The state of your infrastructure has been saved to the path
+below. This state is required to modify and destroy your
+infrastructure, so keep it safe. To inspect the complete state
+use the `terraform show` command.
+
+State path: terraform.tfstate

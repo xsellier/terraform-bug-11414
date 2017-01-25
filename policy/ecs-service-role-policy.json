@@ -1,0 +1,31 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "ecs:DescribeServices",
+        "ecs:UpdateService",
+        "ec2:Describe*",
+        "ec2:AuthorizeSecurityGroupIngress",
+        "cloudwatch:DescribeAlarms",
+        "cloudwatch:PutMetricAlarm",
+        "application-autoscaling:*"
+      ],
+      "Resource": [
+        "*"
+      ],
+      "Effect": "Allow"
+    },
+    {
+      "Sid": "allowLoggingToCloudWatch",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": [
+        "*"
+      ]
+    }
+  ]
+}

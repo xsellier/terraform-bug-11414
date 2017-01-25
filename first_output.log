@@ -1,0 +1,160 @@
+aws_ecs_cluster.cluster: Creating...
+  name: "" => "test-cluster"
+aws_ecs_task_definition.task: Creating...
+  arn:                   "" => "<computed>"
+  container_definitions: "" => "ba714865a2115c6f266a2ec0388447294e4c9ee5"
+  family:                "" => "service"
+  network_mode:          "" => "bridge"
+  revision:              "" => "<computed>"
+aws_iam_role.service: Creating...
+  arn:                "" => "<computed>"
+  assume_role_policy: "" => "{\n  \"Version\": \"2008-10-17\",\n  \"Statement\": [\n    {\n      \"Action\": \"sts:AssumeRole\",\n      \"Principal\": {\n        \"Service\": [\n          \"application-autoscaling.amazonaws.com\",\n          \"ecs.amazonaws.com\",\n          \"ecs-tasks.amazonaws.com\"\n        ]\n      },\n      \"Effect\": \"Allow\"\n    }\n  ]\n}"
+  create_date:        "" => "<computed>"
+  name:               "" => "test-role"
+  path:               "" => "/"
+  unique_id:          "" => "<computed>"
+aws_ecs_cluster.cluster: Creation complete
+aws_iam_role.service: Creation complete
+aws_iam_role_policy.service: Creating...
+  name:   "" => "test-role-policy"
+  policy: "" => "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Action\": [\n        \"ecs:DescribeServices\",\n        \"ecs:UpdateService\",\n        \"ec2:Describe*\",\n        \"ec2:AuthorizeSecurityGroupIngress\",\n        \"cloudwatch:DescribeAlarms\",\n        \"cloudwatch:PutMetricAlarm\",\n        \"application-autoscaling:*\"\n      ],\n      \"Resource\": [\n        \"*\"\n      ],\n      \"Effect\": \"Allow\"\n    },\n    {\n      \"Sid\": \"allowLoggingToCloudWatch\",\n      \"Effect\": \"Allow\",\n      \"Action\": [\n        \"logs:CreateLogStream\",\n        \"logs:PutLogEvents\"\n      ],\n      \"Resource\": [\n        \"*\"\n      ]\n    }\n  ]\n}"
+  role:   "" => "test-role"
+aws_iam_instance_profile.service: Creating...
+  arn:              "" => "<computed>"
+  create_date:      "" => "<computed>"
+  name:             "" => "test-instance-profile"
+  path:             "" => "/test/"
+  roles.#:          "" => "1"
+  roles.3506574090: "" => "test-role"
+  unique_id:        "" => "<computed>"
+aws_ecs_task_definition.task: Creation complete
+aws_ecs_service.service: Creating...
+  cluster:                            "" => "arn:aws:ecs:us-east-1:536007072899:cluster/test-cluster"
+  deployment_maximum_percent:         "" => "200"
+  deployment_minimum_healthy_percent: "" => "100"
+  desired_count:                      "" => "1"
+  name:                               "" => "test"
+  task_definition:                    "" => "arn:aws:ecs:us-east-1:536007072899:task-definition/service:1"
+aws_iam_role_policy.service: Creation complete
+aws_iam_instance_profile.service: Creation complete
+aws_ecs_service.service: Creation complete
+aws_appautoscaling_target.service_asg: Creating...
+  arn:                "" => "<computed>"
+  max_capacity:       "" => "2"
+  min_capacity:       "" => "1"
+  name:               "" => "<computed>"
+  resource_id:        "" => "service/test-cluster/test"
+  role_arn:           "" => "arn:aws:iam::536007072899:role/test-role"
+  scalable_dimension: "" => "ecs:service:DesiredCount"
+  service_namespace:  "" => "ecs"
+aws_cloudwatch_metric_alarm.cpu_service_down: Creating...
+  actions_enabled:        "" => "true"
+  alarm_description:      "" => "This metric monitors low cpu utilization of test"
+  alarm_name:             "" => "test-cpu-alarm-down"
+  comparison_operator:    "" => "LessThanOrEqualToThreshold"
+  dimensions.%:           "" => "2"
+  dimensions.ClusterName: "" => "test-cluster"
+  dimensions.ServiceName: "" => "test"
+  evaluation_periods:     "" => "10"
+  metric_name:            "" => "CPUUtilization"
+  namespace:              "" => "AWS/ECS"
+  period:                 "" => "60"
+  statistic:              "" => "Average"
+  threshold:              "" => "45"
+  unit:                   "" => "Percent"
+aws_cloudwatch_metric_alarm.mem_service_down: Creating...
+  actions_enabled:        "" => "true"
+  alarm_description:      "" => "This metric monitors memory utilization (down) for test"
+  alarm_name:             "" => "test-mem-alarm-down"
+  comparison_operator:    "" => "LessThanOrEqualToThreshold"
+  dimensions.%:           "" => "2"
+  dimensions.ClusterName: "" => "test-cluster"
+  dimensions.ServiceName: "" => "test"
+  evaluation_periods:     "" => "10"
+  metric_name:            "" => "MemoryUtilization"
+  namespace:              "" => "AWS/ECS"
+  period:                 "" => "60"
+  statistic:              "" => "Average"
+  threshold:              "" => "35"
+  unit:                   "" => "Percent"
+aws_cloudwatch_metric_alarm.cpu_service_down: Creation complete
+aws_cloudwatch_metric_alarm.mem_service_down: Creation complete
+aws_appautoscaling_target.service_asg: Creation complete
+aws_appautoscaling_policy.service_down: Creating...
+  adjustment_type:                                        "" => "ChangeInCapacity"
+  arn:                                                    "" => "<computed>"
+  cooldown:                                               "" => "60"
+  metric_aggregation_type:                                "" => "Average"
+  name:                                                   "" => "test-asp-down"
+  policy_type:                                            "" => "StepScaling"
+  resource_id:                                            "" => "service/test-cluster/test"
+  scalable_dimension:                                     "" => "ecs:service:DesiredCount"
+  service_namespace:                                      "" => "ecs"
+  step_adjustment.#:                                      "" => "1"
+  step_adjustment.1139317094.metric_interval_lower_bound: "" => "0"
+  step_adjustment.1139317094.metric_interval_upper_bound: "" => ""
+  step_adjustment.1139317094.scaling_adjustment:          "" => "-1"
+aws_appautoscaling_policy.service_up: Creating...
+  adjustment_type:                                        "" => "ChangeInCapacity"
+  arn:                                                    "" => "<computed>"
+  cooldown:                                               "" => "60"
+  metric_aggregation_type:                                "" => "Average"
+  name:                                                   "" => "test-asp-up"
+  policy_type:                                            "" => "StepScaling"
+  resource_id:                                            "" => "service/test-cluster/test"
+  scalable_dimension:                                     "" => "ecs:service:DesiredCount"
+  service_namespace:                                      "" => "ecs"
+  step_adjustment.#:                                      "" => "2"
+  step_adjustment.109352967.metric_interval_lower_bound:  "" => "50"
+  step_adjustment.109352967.metric_interval_upper_bound:  "" => ""
+  step_adjustment.109352967.scaling_adjustment:           "" => "2"
+  step_adjustment.2734857921.metric_interval_lower_bound: "" => "0"
+  step_adjustment.2734857921.metric_interval_upper_bound: "" => "50"
+  step_adjustment.2734857921.scaling_adjustment:          "" => "1"
+aws_appautoscaling_policy.service_down: Creation complete
+aws_appautoscaling_policy.service_up: Creation complete
+aws_cloudwatch_metric_alarm.mem_service_up: Creating...
+  actions_enabled:          "" => "true"
+  alarm_actions.#:          "" => "1"
+  alarm_actions.1934486497: "" => "arn:aws:autoscaling:us-east-1:536007072899:scalingPolicy:3edf637a-3af2-4f91-a3e6-cceea07fc445:resource/ecs/service/test-cluster/test:policyName/test-asp-up"
+  alarm_description:        "" => "This metric monitors memory utilization (up) for test"
+  alarm_name:               "" => "test-mem-alarm-up"
+  comparison_operator:      "" => "GreaterThanOrEqualToThreshold"
+  dimensions.%:             "" => "2"
+  dimensions.ClusterName:   "" => "test-cluster"
+  dimensions.ServiceName:   "" => "test"
+  evaluation_periods:       "" => "1"
+  metric_name:              "" => "MemoryUtilization"
+  namespace:                "" => "AWS/ECS"
+  period:                   "" => "60"
+  statistic:                "" => "Maximum"
+  threshold:                "" => "75"
+  unit:                     "" => "Percent"
+aws_cloudwatch_metric_alarm.cpu_service_up: Creating...
+  actions_enabled:          "" => "true"
+  alarm_actions.#:          "" => "1"
+  alarm_actions.1934486497: "" => "arn:aws:autoscaling:us-east-1:536007072899:scalingPolicy:3edf637a-3af2-4f91-a3e6-cceea07fc445:resource/ecs/service/test-cluster/test:policyName/test-asp-up"
+  alarm_description:        "" => "This metric monitors high cpu utilization of test"
+  alarm_name:               "" => "test-cpu-alarm-up"
+  comparison_operator:      "" => "GreaterThanOrEqualToThreshold"
+  dimensions.%:             "" => "2"
+  dimensions.ClusterName:   "" => "test-cluster"
+  dimensions.ServiceName:   "" => "test"
+  evaluation_periods:       "" => "1"
+  metric_name:              "" => "CPUUtilization"
+  namespace:                "" => "AWS/ECS"
+  period:                   "" => "60"
+  statistic:                "" => "Maximum"
+  threshold:                "" => "65"
+  unit:                     "" => "Percent"
+aws_cloudwatch_metric_alarm.cpu_service_up: Creation complete
+aws_cloudwatch_metric_alarm.mem_service_up: Creation complete
+
+Apply complete! Resources: 13 added, 0 changed, 0 destroyed.
+
+The state of your infrastructure has been saved to the path
+below. This state is required to modify and destroy your
+infrastructure, so keep it safe. To inspect the complete state
+use the `terraform show` command.
+
+State path: terraform.tfstate
